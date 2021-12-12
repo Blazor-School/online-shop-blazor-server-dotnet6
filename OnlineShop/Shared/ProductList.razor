@@ -1,0 +1,31 @@
+﻿@using OnlineShop.Models
+@using OnlineShop.Services
+@inject CartService CartService
+
+@foreach (var product in Products)
+{
+    <div class="card w-25">
+        <div class="card-body">
+            <h5 class="card-title">@product.Name</h5>
+            <p class="card-text">@product.Description</p>
+            <blockquote class="card-text">$@product.Price</blockquote>
+            @if (DisplayBuyButton)
+            {
+                <button class="btn btn-primary" type="button" @onclick="() => Buy(product.Id)">Buy</button>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    [EditorRequired]
+    [Parameter]
+    public List<Product> Products { get; set; } = new();
+    [Parameter]
+    public bool DisplayBuyButton { get; set; }
+
+    private void Buy(Guid productId)
+    {
+        CartService.AddProductToCart(productId);
+    }
+}

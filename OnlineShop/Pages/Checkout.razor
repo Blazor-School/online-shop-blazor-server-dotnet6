@@ -1,0 +1,35 @@
+﻿@page "/checkout"
+@using OnlineShop.Models
+@using OnlineShop.Services
+@inject CartService CartService
+@inject IJSRuntime JSRuntime
+
+<h3>You have @CartService.SelectedItems.Count in cart:</h3>
+<ProductList Products="CartService.SelectedItems"></ProductList>
+<EditForm class="vstack gap-3" Model="CheckoutForm" OnValidSubmit="SubmitAsync">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <div>
+        <label class="form-label" for="name">Name:</label>
+        <InputText id="name" class="form-control" @bind-Value="CheckoutForm.Name"></InputText>
+        <ValidationMessage class="form-control" For="()=>CheckoutForm.Name"></ValidationMessage>
+    </div>
+
+    <div>
+        <label class="form-label" for="address">Address:</label>
+        <InputText id="address" class="form-control" @bind-Value="CheckoutForm.Address"></InputText>
+        <ValidationMessage class="form-control" For="()=>CheckoutForm.Address"></ValidationMessage>
+    </div>
+
+    <div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+</EditForm>
+
+@code {
+    public CheckoutForm CheckoutForm { get; set; } = new();
+
+    private async Task SubmitAsync()
+    {
+        await JSRuntime.InvokeVoidAsync("alert", $"Thank you {CheckoutForm.Name}, we will deliver to {CheckoutForm.Address}.");
+    }
+}
