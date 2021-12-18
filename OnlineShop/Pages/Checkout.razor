@@ -4,7 +4,7 @@
 @inject CartService CartService
 @inject IJSRuntime JSRuntime
 
-<h3>You have @CartService.SelectedItems.Count in cart:</h3>
+<h3>You have @CartService.SelectedItems.Count item(s) in cart:</h3>
 <ProductList Products="CartService.SelectedItems"></ProductList>
 <EditForm class="vstack gap-3" Model="CheckoutForm" OnValidSubmit="SubmitAsync">
     <DataAnnotationsValidator></DataAnnotationsValidator>
